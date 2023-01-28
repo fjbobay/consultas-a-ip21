@@ -92,6 +92,22 @@ La clase DataRetriever se encarga de facilitar la obtención de datos de una bas
         data.to_csv(file_name)
   ```
 
+- **transform_data** (self, data): 
+ Se encarga de convertir la tabla obtenida en el resultado de la consulta SQL en un formato más conveniente para el análisis de datos. En particular, esta función realiza las siguientes acciones:
+
+  - Crea una nueva columna llamada "Fecha" que contiene la información de la columna "TS" en formato de fecha y hora.
+  - Agrupa los datos por la columna "Fecha" y "NAME" y calcula el promedio de la columna "VALUE" para cada grupo.
+  - Crea columnas separadas para cada "NAME" y su respectivo valor promedio.
+  - Elimina las columnas originales "TS" y "NAME" y "VALUE"
+
+  El resultado final es una tabla con una columna "Fecha" que contiene las fechas y horas de los datos, y varias columnas adicionales, cada una de las cuales contiene los valores promedio para un "NAME" específico. Esta tabla es más fácil de analizar y visualizar para el análisis de datos.
+  ```python
+    def transform_data(self, data):
+        data['TS'] = pd.to_datetime(data['TS'])
+        data = data.pivot(index='TS', columns='NAME', values='VALUE')
+        return data
+  ```
+
 - **close_connection** (self)
    close_connection(self): Este método permite cerrar la conexión con la base de datos. Es importante llamar a este método después de haber obtenido los datos y guardarlos en un archivo para evitar problemas de conexión.
     ```python

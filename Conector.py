@@ -3,8 +3,8 @@ import pyodbc
 
 # Clase para obtener datos de una base de datos y guardarlos en un archivo csv.
 class DataRetriever:
+    # Inicializa una conexión con la base de datos.
     def __init__(self):
-        # Inicializa una conexión con la base de datos.
         self.conn = pyodbc.connect("DRIVER={AspenTech SQLplus};HOST=ZARWSQLIP2PRD02;PORT=10014")
 
     def get_data(self, tags, start_time, end_time):
@@ -23,13 +23,18 @@ class DataRetriever:
         result = pd.read_sql(sql, self.conn, params=(tags, start_time, end_time))
         result['date_time'] = pd.to_datetime(result['TS'],unit='s')
         return result
+    # Se encarga de convertir la tabla obtenida en el resultado de la consulta SQL en un formato más conveniente para el análisis de datos
+    def transform_data(self, data):
+        data['TS'] = pd.to_datetime(data['TS'])
+        data = data.pivot(index='TS', columns='NAME', values='VALUE')
+        return data
 
+    # Guarda los datos especificados en un archivo csv.
     def save_to_csv(self, data, file_name):
-        # Guarda los datos especificados en un archivo csv.
         data.to_csv(file_name)
 
+    # Cierra la conexión con la base de datos.
     def close_connection(self):
-        # Cierra la conexión con la base de datos.
         self.conn.close()
 
 
