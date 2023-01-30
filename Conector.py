@@ -5,7 +5,7 @@ import pyodbc
 class DataRetriever:
     # Inicializa una conexión con la base de datos.
     def __init__(self):
-        self.conn = pyodbc.connect("DRIVER={AspenTech SQLplus};HOST=ZARWSQLIP2PRD02;PORT=10014")
+        self.conn = pyodbc.connect("DRIVER={AspenTech SQLplus};HOST=<SERVER>;PORT=<PORT>")
 
     def get_data(self, tags, start_time, end_time):
         """

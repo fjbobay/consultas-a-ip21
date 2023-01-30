@@ -73,7 +73,7 @@ La clase DataRetriever se encarga de facilitar la obtención de datos de una bas
   Este método es el constructor de la clase. En él se establece la conexión con la base de datos utilizando pyodbc y los parámetros de conexión específicos (driver, host y puerto).
     ```python
    def __init__(self):
-        self.conn = pyodbc.connect("DRIVER={AspenTech SQLplus};HOST=ZARWSQLIP2PRD02;PORT=10014")
+        self.conn = pyodbc.connect("DRIVER={AspenTech SQLplus};HOST=<SERVER>;PORT=<PORT>")
     ```
 
 - **get_data** (self, tags, start_time, end_time): 
