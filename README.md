@@ -1,7 +1,7 @@
 
 
 ## Crear una consulta a IP21 con python
-
+****
 El código que se ha proporcionado es un ejemplo de cómo obtener datos de la base de datos IP21 utilizando la librería **pyodbc** de **Python** y almacenarlos en un archivo csv utilizando la librería pandas. El algoritmo se divide en las siguientes etapas:
 
  1. Conexión a la base de datos: Se establece una conexión a la base de datos utilizando pyodbc y los parámetros de conexión específicos (driver, host y puerto).
@@ -79,7 +79,8 @@ La clase DataRetriever se encarga de facilitar la obtención de datos de una bas
 - **get_data** (self, tags, start_time, end_time): 
   Este método permite obtener los datos de los tags especificados en el rango de tiempo especificado. Construye una consulta SQL que especifica los tags a obtener, el rango de tiempo y los parámetros específicos de la consulta. Luego ejecuta la consulta y devuelve el resultado.
     ```python
-    sql = "SELECT NAME,TS,VALUE FROM HISTORY WHERE NAME IN ? AND PERIOD = 9000 AND REQUEST = 2 AND TS BETWEEN TIMESTAMP ? AND TIMESTAMP ?"
+    def get_data(self, tags, start_time, end_time):
+        sql = "SELECT NAME,TS,VALUE FROM HISTORY WHERE NAME IN ? AND PERIOD = 9000 AND REQUEST = 2 AND TS BETWEEN TIMESTAMP ? AND TIMESTAMP ?"
         result = pd.read_sql(sql, self.conn, params=(tags, start_time, end_time))
         result['date_time'] = pd.to_datetime(result['TS'],unit='s')
         return result
